@@ -6,445 +6,498 @@
 <title>Como Escrever Prompts Bem Estruturados para LLMs</title>
 <style>
   body {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 18px;
-    line-height: 1.7;
-    color: #404040;
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    color: #000000;
     background: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  .page {
+    max-width: 816px;
+    margin: 0 auto;
+    padding: 72px 72px 72px 72px;
   }
 
-  /* Cover / Title block */
-  .cover {
+  /* Title block */
+  .title-line1 {
     text-align: center;
-    margin-bottom: 48px;
-  }
-  .cover-title-1 {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 38px;
-    font-weight: 700;
+    font-size: 28pt;
+    font-weight: bold;
     color: #1F3864;
     margin: 0;
+    padding: 0;
     line-height: 1.2;
   }
-  .cover-title-2 {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 38px;
-    font-weight: 700;
+  .title-line2 {
+    text-align: center;
+    font-size: 28pt;
+    font-weight: bold;
     color: #2E75B6;
     margin: 0;
+    padding: 0;
     line-height: 1.2;
   }
-  .cover-title-3 {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 38px;
-    font-weight: 700;
+  .title-line3 {
+    text-align: center;
+    font-size: 28pt;
+    font-weight: bold;
     color: #1F3864;
-    margin: 0 0 24px 0;
+    margin: 0 0 4px 0;
+    padding: 0;
     line-height: 1.2;
   }
-  .cover-author {
+  .title-divider {
+    border: none;
+    border-bottom: 2px solid #2E75B6;
+    margin: 6px 0 0 0;
+  }
+  .author {
+    text-align: center;
+    font-size: 18pt;
     font-style: italic;
     color: #404040;
-    font-size: 18px;
-    margin: 0;
+    margin: 10px 0 2px 0;
   }
-  .cover-subtitle {
+  .affiliation {
+    text-align: center;
+    font-size: 11pt;
     font-style: italic;
     color: #6B7280;
-    font-size: 16px;
-    margin: 4px 0 0 0;
+    margin: 2px 0 1px 0;
   }
-  .cover-date {
+  .date {
+    text-align: center;
+    font-size: 11pt;
     font-style: italic;
     color: #6B7280;
-    font-size: 16px;
-    margin: 4px 0 0 0;
+    margin: 1px 0 0 0;
   }
 
   /* Headings */
   h1 {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 26px;
-    font-weight: 700;
+    font-size: 20pt;
+    font-weight: normal;
     color: #2F5496;
-    margin-top: 40px;
-    margin-bottom: 10px;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+    border: none;
   }
   h2 {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 16pt;
+    font-weight: normal;
     color: #2F5496;
-    margin-top: 32px;
-    margin-bottom: 8px;
+    margin-top: 14pt;
+    margin-bottom: 4pt;
+  }
+  h3 {
+    font-size: 14pt;
+    font-weight: normal;
+    color: #2F5496;
+    margin-top: 10pt;
+    margin-bottom: 3pt;
   }
 
-  /* Paragraphs */
+  /* Normal paragraph */
   p {
-    margin: 0 0 14px 0;
+    font-size: 11pt;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 8pt;
+    line-height: 1.45;
   }
 
-  /* Section label lines (e.g. "#CONTEXTO - O pano de fundo...") */
+  /* Section label line (e.g. #CONTEXTO - O pano de fundo...) */
   .section-label {
-    margin: 0 0 12px 0;
-  }
-  .section-label .label-tag {
-    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12pt;
+    font-weight: bold;
     color: #000000;
+    margin-top: 10pt;
+    margin-bottom: 3pt;
   }
-  .section-label .label-desc {
+  .section-label .desc {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: normal;
     font-style: italic;
     color: #404040;
   }
 
-  /* Prompt boxes (tables from docx) */
+  /* Code/prompt boxes */
   .prompt-box {
+    border: 1px solid #2E75B6;
     background-color: #EBF3FB;
-    border: 1px solid #B8D4EC;
-    border-radius: 4px;
-    padding: 18px 22px;
-    margin: 16px 0 20px 0;
+    padding: 6px 9px;
+    margin: 6pt 0;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
+    font-size: 9pt;
     color: #1F3864;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    word-break: break-word;
+    line-height: 1.5;
   }
-
-  /* Bold / italic inline */
-  strong { font-weight: 700; }
-  em { font-style: italic; }
-
-  /* Italic intro bullets (Intro section) */
-  .intro-bullet {
-    font-style: italic;
-    margin: 0 0 6px 0;
-    padding-left: 16px;
-  }
-
-  /* "janela de contexto" emphasis */
-  .term-emphasis {
-    font-style: italic;
-    font-weight: 700;
-  }
-
-  /* Error/solution pattern in ch. 7 */
-  .error-label { font-weight: 700; color: #404040; }
-
-  /* inline code */
-  code {
+  .prompt-box p {
     font-family: 'Courier New', Courier, monospace;
-    background: #f0f4fa;
-    padding: 1px 4px;
-    border-radius: 3px;
-    font-size: 15px;
+    font-size: 9pt;
+    color: #1F3864;
+    margin: 1px 0;
+  }
+
+  /* Example label boxes (without structure / with structure) */
+  .example-box {
+    border: 1px solid #2E75B6;
+    background-color: #EBF3FB;
+    padding: 6px 9px;
+    margin: 6pt 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9pt;
+    color: #1F3864;
+    line-height: 1.5;
+  }
+
+  .bold-label {
+    font-weight: bold;
+    color: #404040;
+  }
+
+  /* Error section bolded terms */
+  .error-term {
+    font-weight: bold;
+  }
+
+  /* Spacing helpers */
+  .spacer {
+    height: 6pt;
   }
 </style>
 </head>
 <body>
+<div class="page">
 
-<!-- COVER -->
-<div class="cover">
-  <p class="cover-title-1">Como Escrever</p>
-  <p class="cover-title-2">Prompts Bem Estruturados</p>
-  <p class="cover-title-3">para LLMs</p>
-  <p class="cover-author">Ivan Moura Campos</p>
-  <p class="cover-subtitle">Professor Emérito – Departamento de Ciência da Computação da UFMG</p>
-  <p class="cover-date">Abril de 2026</p>
+  <!-- Title -->
+  <p class="title-line1">Como Escrever</p>
+  <p class="title-line2">Prompts Bem Estruturados</p>
+  <p class="title-line3">para LLMs</p>
+  <hr class="title-divider">
+  <p class="author">Ivan Moura Campos</p>
+  <p class="affiliation">Professor Emérito – Departamento de Ciência da Computação da UFMG</p>
+  <p class="date">Abril de 2026</p>
+
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+
+  <!-- Introdução -->
+  <h1>Introdução</h1>
+
+  <p>Você provavelmente já usou uma IA como ChatGPT, Gemini ou Claude e ficou frustrado com uma resposta vaga, incompleta ou totalmente fora do que você queria. Na maioria das vezes o problema não está na IA, mas sim em como a pergunta foi formulada.</p>
+
+  <p>Modelos Grandes de Linguagem, ou LLMs (Large Language Models, da sigla em Inglês) são ferramentas extraordinariamente poderosas, mas funcionam como um espelho refinado, refletindo com precisão o que você projeta neles. Uma entrada vaga produz uma saída vaga, uma entrada bem estruturada produz uma resposta focada, útil e de alta qualidade.</p>
+
+  <p>Este texto vai lhe ajudar com o seguinte:</p>
+
+  <p><em>- Como organizar as coisas ao formular um pedido para uma IA, e</em></p>
+  <p><em>- Como usar a linguagem Markdown para estruturar o pedido de forma clara e eficaz</em>.</p>
+
+  <p>Nenhuma das duas exige conhecimento técnico, só atenção e prática.</p>
+
+  <!-- 1 -->
+  <h1>1. LLMs e a janela de contexto</h1>
+
+  <p>Para se comunicar bem com qualquer interlocutor, é útil entender como ele funciona. Com IAs, não é diferente.</p>
+
+  <p><strong>O que é um LLM?</strong> Um modelo de linguagem é um programa treinado em enormes quantidades de texto, incluindo livros, artigos, conversas, códigos, etc., para aprender padrões de linguagem. Com base nesses padrões, ele é capaz de gerar textos que fazem sentido, responder perguntas e executar tarefas.</p>
+
+  <p><strong>O que é a janela de contexto?</strong> Toda vez que você abre uma conversa com uma IA, ela começa "do zero". Ela não tem memória de conversas anteriores, a menos que você as forneça. O único material que ela tem para trabalhar é o que está na conversa atual. Isso se chama <em><strong>janela de contexto</strong></em>.</p>
+
+  <p>Pense na janela de contexto como a mesa de trabalho da IA. Tudo que você coloca nessa mesa é considerado. Quanto mais claro, organizado e relevante for o material que você dispõe sobre essa mesa, melhor será o trabalho entregue.</p>
+
+  <p>A implicação prática é a seguinte: o que você coloca nessa janela, e como o organiza, determina tudo que o modelo pode fazer por você. Um prompt bem estruturado usa a janela de contexto com eficiência. Ele fornece ao modelo as informações certas na ordem certa e deixa de fora o que é irrelevante. Um prompt mal estruturado desperdiça espaço e introduz ruído.</p>
+
+  <!-- 2 -->
+  <h1>2. Por que precisão importa?</h1>
+
+  <p>Durante o treinamento, LLMs aprendem padrões estatísticos: quais palavras (tokens) tendem a seguir outras palavras, quais ideias se agrupam, quais estruturas sinalizam quais intenções. Ele não memorizou fatos como um banco de dados. Ele internalizou relações.</p>
+
+  <p>Quando você o envia uma mensagem, o modelo não <strong>pensa</strong> como uma pessoa. Ele gera uma resposta prevendo, token por token, qual seria a continuação mais plausível para sua entrada. A qualidade dessa previsão depende quase inteiramente da qualidade do que você forneceu. "Entra lixo, sai lixo" não é um clichê nesse contexto, é uma descrição técnica do que acontece.</p>
+
+  <p>A IA não advinha intenções. Ela processa o que está escrito. Se você escreve "me ajuda com um texto sobre liderança", a IA não sabe se você quer um artigo acadêmico, um post para LinkedIn, um roteiro de palestra ou uma lista de dicas. Ela vai escolher uma interpretação, e pode não ser a sua.</p>
+
+  <p>É por isso que precisão importa. O modelo não consegue ler sua mente. Ele não pode fazer perguntas de esclarecimento, a menos que você o convide a isso. Ele fará suposições para preencher as lacunas, e essas suposições podem não corresponder às suas expectativas. Cada ambiguidade no seu prompt é um convite para o modelo adivinhar.</p>
+
+  <!-- 3 -->
+  <h1>3. Por que a estrutura importa e o que é Markdown</h1>
+
+  <p>Antes de apresentar o modelo recomendado de prompt, precisamos falar brevemente sobre uma ferramenta que tornará suas consultas muito mais claras: o Markdown.</p>
+
+  <p>Markdown é uma forma leve de adicionar estrutura a texto simples. Você não precisa de nenhum programa especial. Não precisa saber programar. Basta digitar alguns caracteres simples. Um # no início de uma linha para criar um título, dois asteriscos ** ao redor de uma palavra para deixá-la em <strong>negrito</strong>, um &gt; para criar uma citação em bloco, e o texto imediatamente se torna mais organizado.</p>
+
+  <p>Por que isso importa para os LLMs? Porque os modelos de linguagem foram treinados (também) com quantidades enormes de texto formatado em Markdown. Quando você usa títulos, rótulos e hierarquia visual, está falando uma língua que o modelo já conhece profundamente. Você está sinalizando estrutura, não apenas conteúdo. O modelo consegue identificar o que é contexto, o que é tarefa, o que é restrição — porque cada um desses elementos está visual e semanticamente delimitado.</p>
+
+  <p>Compare estas duas formas de pedir a mesma coisa:</p>
+
+  <p class="bold-label"><strong>Sem estrutura:</strong></p>
+
+  <div class="example-box">
+    <p>Estou escrevendo um post de blog para minha empresa, sobre embalagens sustentáveis, é para consumidores e não para especialistas, quero que tenha cerca de 500 palavras, por favor escreva em tom amigável e sem jargões técnicos.</p>
+  </div>
+
+  <p class="bold-label"><strong>Com estrutura:</strong></p>
+
+  <div class="example-box">
+    <p>#CONTEXTO</p>
+    <p>- Estou escrevendo um post de blog para o site da minha empresa.</p>
+    <p>- Tema: embalagens sustentáveis.</p>
+    <p>&nbsp;</p>
+    <p>#TAREFA</p>
+    <p>Escreva o post de blog.</p>
+    <p>&nbsp;</p>
+    <p>#REQUISITOS</p>
+    <p>- Público-alvo: consumidores em geral, não especialistas técnicos</p>
+    <p>- Extensão: aproximadamente 500 palavras</p>
+    <p>- Tom: amigável e acessível</p>
+    <p>&nbsp;</p>
+    <p>#RESTRIÇÕES</p>
+    <p>- Evite jargões técnicos</p>
+    <p>- Não inclua notas de rodapé nem citações</p>
+  </div>
+
+  <p>Os dois prompts transmitem a mesma informação, mas a versão estruturada é inequívoca, inteligível e imediatamente interpretável, tanto pelo modelo quanto por você. Se precisar revisá-la mais tarde, saberá exatamente onde mudar.</p>
+
+  <!-- 4 -->
+  <h1>4. Um Formato Canônico de Prompt</h1>
+
+  <p>O formato proposto em seguida utiliza sete seções rotuladas, cada uma introduzida por um título em Markdown. Nem todas as seções são necessárias em todas as consultas: uma pergunta factual simples não precisa de mais do que uma TAREFA. Mas, para qualquer solicitação complexa, o uso das sete seções consistentemente produzirá resultados melhores.</p>
+
+  <p>Visão geral das sete etiquetas:</p>
+
+  <div class="prompt-box">
+    <p>#CONTEXTO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— informações prévias que o LLM necessita para melhor lhe entender</p>
+    <p>#PERSONA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— o papel ou especialidade que você quer que o modelo adote</p>
+    <p>#TAREFA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— a coisa especifica que você quer que ele faça</p>
+    <p>#REQUISITOS&nbsp;&nbsp;&nbsp;— o que a resposta tem que incluir</p>
+    <p>#RESTRIÇÕES&nbsp;&nbsp;&nbsp;— o que a resposta deve evitar</p>
+    <p>#SAÍDA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— formato, extensão, tom, idioma, ...</p>
+    <p>#AÇÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— o comando explícito de execução (o gatilho)</p>
+  </div>
+
+  <p>Vejamos cada uma em detalhe.</p>
+
+  <div class="spacer"></div>
+
+  <!-- 4.1 -->
+  <h2>4.1 #CONTEXTO — Preparando o Cenário</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#CONTEXTO</span><span class="desc"> - O pano de fundo de que o modelo precisa</span></p>
+
+  <p>Esta seção responde à pergunta: o que o modelo precisa saber sobre a situação, antes de poder ajudá-lo? Não é a tarefa em si, são as informações prévias, circundantes, que tornam a tarefa significativa.</p>
+
+  <p>Um bom contexto responde a perguntas como: Quem é você? Em que está trabalhando? Qual é o objetivo do projeto? Quem é o público-alvo? O que já foi feito?</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#CONTEXTO</p>
+    <p>- Sou professor do ensino médio preparando uma aula sobre mudanças climáticas.</p>
+    <p>- Meus alunos têm 16 anos e não têm conhecimento prévio em ciências ambientais.</p>
+  </div>
+
+  <!-- 4.2 -->
+  <h2>4.2 #PERSONA — Atribuindo um Papel ao Modelo</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#PERSONA</span><span class="desc"> - A especialidade ou perspectiva a adotar</span></p>
+
+  <p>Os modelos de linguagem podem adotar diferentes vozes, estilos e áreas de especialização dependendo de como você enquadra a solicitação. A etiqueta PERSONA permite especificar qual chapéu o modelo deve usar.</p>
+
+  <p>Isso não é apenas um recurso estilístico. Quando você pede ao modelo que se comporte como especialista em determinada área, ele recorre mais intensamente ao conhecimento especializado associado a esse campo. A qualidade e a relevância da resposta tipicamente melhoram.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#PERSONA</p>
+    <p>Aja como um comunicador científico experiente, especializado em explicar temas complexos para adolescentes, sem simplificar demais.</p>
+  </div>
+
+  <!-- 4.3 -->
+  <h2>4.3 #TAREFA — A Solicitação Central</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#TAREFA</span><span class="desc"> - Exatamente o quê você precisa que o modelo faça</span></p>
+
+  <p>Este é o coração do prompt. A TAREFA deve ser uma <strong>instrução única, clara e acionável</strong>. Evite combinar várias tarefas em uma única etiqueta. Se precisar de várias coisas, liste-as explicitamente ou considere prompts separados.</p>
+
+  <p>A falha mais comum aqui é a vagueza. "Me ajude com meu relatório" não é uma tarefa. "Escreva a seção de introdução do meu relatório", é.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#TAREFA</p>
+    <p>Elabore um plano de aula sobre as causas e efeitos das mudanças climáticas.</p>
+  </div>
+
+  <!-- 4.4 -->
+  <h2>4.4 #REQUISITOS — O que a Resposta Deve Incluir</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#REQUISITOS</span><span class="desc"> - Restrições positivas sobre a resposta</span></p>
+
+  <p>Os requisitos são as coisas que a resposta deve fazer, incluir ou satisfazer. Pense neles como uma lista de verificação que o modelo deve conferir antes de entregar sua resposta.</p>
+
+  <p>Use marcadores aqui. Cada requisito deve ser concreto e verificável, algo que você poderia literalmente marcar como cumprido ao ler a resposta.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#REQUISITOS</p>
+    <p>- A aula terá duração de 45 minutos</p>
+    <p>- Incluir pelo menos uma atividade prática em grupo</p>
+    <p>- Referenciar um exemplo real de impacto climático dos últimos 10 anos</p>
+    <p>- Garantir que todo o vocabulário seja acessível ao nível do ensino médio</p>
+    <p>- Fornecer o tempo estimado para cada segmento da aula</p>
+    <p>– Incluir uma pergunta de discussão para encerramento</p>
+  </div>
+
+  <!-- 4.5 -->
+  <h2>4.5 #RESTRIÇÕES — O que a Resposta Deve Evitar</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#RESTRIÇÕES</span><span class="desc"> - Restrições negativas sobre a resposta</span></p>
+
+  <p>Enquanto os REQUISITOS dizem ao modelo o que incluir, as RESTRIÇÕES dizem o que deixar de fora. Esta seção é especialmente útil para prevenir falhas comuns: extensão excessiva, tom inadequado, conteúdo indesejado ou terminologia técnica que seu público não entenderá.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#RESTRIÇÕES</p>
+    <p>- Não sugerir atividades que requeiram equipamentos especiais</p>
+    <p>- Evitar tom pessimista ou alarmista</p>
+  </div>
+
+  <!-- 4.6 -->
+  <h2>4.6 #SAÍDA — Como a Resposta Deve Parecer</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#SAÍDA</span><span class="desc"> - Formato, extensão, tom, idioma, ...</span></p>
+
+  <p>A seção SAÍDA é onde você especifica a forma da resposta, independentemente do seu conteúdo. É aqui que você diz: me dê uma lista itemizada, escreva em prosa formal, limite a 300 palavras, ou responda em Português.</p>
+
+  <p>Separar o formato de saída do conteúdo da tarefa é uma das técnicas essenciais na redação de prompts. Isso evita que você enterre instruções de formatação dentro da descrição da tarefa, onde podem ser facilmente ignoradas.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#SAÍDA</p>
+    <p>- Formato: documento estruturado com seções nomeadas</p>
+    <p>- Extensão: aproximadamente 1000 palavras</p>
+    <p>- Tom: profissional, porém acolhedor</p>
+    <p>- Idioma: Português brasileiro</p>
+  </div>
+
+  <!-- 4.7 -->
+  <h2>4.7 #AÇÃO — O Gatilho</h2>
+
+  <p class="section-label"><span style="font-family:'Courier New',Courier,monospace;font-size:12pt;font-weight:bold;color:#000000;">#AÇÃO</span><span class="desc"> - A instrução explícita para começar</span></p>
+
+  <p>A etiqueta AÇÃO é curta e direta. É a instrução final que diz ao modelo para executar tudo o que veio antes. Na maioria dos casos, é uma única frase.</p>
+
+  <p>Você pode se perguntar por que isso é necessário se já escreveu uma TAREFA. O motivo é tanto psicológico quanto técnico: separa claramente a especificação da execução e sinaliza ao modelo que todo o enquadramento está completo e que ele deve agora produzir o resultado final.</p>
+
+  <p><strong>Exemplo:</strong></p>
+
+  <div class="prompt-box">
+    <p>#AÇÃO</p>
+    <p>Escreva o plano de aula</p>
+  </div>
+
+  <!-- 5 -->
+  <h1>5. O Exemplo Completo</h1>
+
+  <p>Aqui está tudo reunido em um prompt coerente, usando a aula sobre mudanças climáticas como exemplo:</p>
+
+  <p>Perceba como é fácil ler este prompt. Não apenas para o modelo, mas para você mesmo. Se um colega lhe perguntasse o que você estava tentando realizar, você poderia entregar-lhe este documento e ele entenderia imediatamente. Essa clareza não é acidental. É o resultado da estrutura.</p>
+
+  <div class="prompt-box">
+    <p>#CONTEXTO</p>
+    <p>- Sou professor do ensino médio preparando uma aula sobre mudanças climáticas.</p>
+    <p>- Meus alunos têm 16 anos e não têm conhecimento prévio em ciências ambientais.</p>
+    <p>&nbsp;</p>
+    <p>#TAREFA</p>
+    <p>Elabore um plano de aula sobre as causas e efeitos das mudanças climáticas.</p>
+    <p>&nbsp;</p>
+    <p>#PERSONA</p>
+    <p>Aja como um comunicador científico experiente, especializado em explicar temas complexos para adolescentes, sem simplificar demais.</p>
+    <p>&nbsp;</p>
+    <p>#REQUISITOS</p>
+    <p>- A aula terá duração de 45 minutos</p>
+    <p>- Incluir pelo menos uma atividade prática em grupo</p>
+    <p>- Referenciar um exemplo real de impacto climático dos últimos 10 anos</p>
+    <p>- Garantir que todo o vocabulário seja acessível ao nível do ensino médio</p>
+    <p>- Fornecer o tempo estimado para cada segmento da aula</p>
+    <p>– Incluir uma pergunta de discussão para encerramento</p>
+    <p>&nbsp;</p>
+    <p>#RESTRIÇÕES</p>
+    <p>- Não sugerir atividades que requeiram equipamentos especiais</p>
+    <p>- Evitar tom pessimista ou alarmista</p>
+    <p>&nbsp;</p>
+    <p>#SAÍDA</p>
+    <p>- Formato: documento estruturado com seções nomeadas</p>
+    <p>- Extensão: aproximadamente 1000 palavras</p>
+    <p>- Tom: profissional, porém acolhedor</p>
+    <p>- Idioma: Português brasileiro</p>
+    <p>&nbsp;</p>
+    <p>#AÇÃO</p>
+    <p>Escreva o plano de aula</p>
+  </div>
+
+  <!-- 6 -->
+  <h1>6. Dicas Práticas para Prompts Melhores</h1>
+
+  <h2>6.1 Você não precisa das sete etiquetas sempre</h2>
+
+  <p>Uma pergunta factual simples, "Qual é a capital da Austrália?" precisa apenas de uma TAREFA. O formato canônico é uma estrutura proposta para facilitar, não para restringir. Use as seções que adicionam clareza e pule as desnecessárias.</p>
+
+  <h2>6.2 Itere e Refine</h2>
+
+  <p>Pense no seu primeiro prompt como um rascunho. Se a resposta do modelo não estiver correta, examine seu prompt antes de culpar o modelo. Normalmente, o problema é uma TAREFA mal especificada, uma RESTRIÇÃO faltando ou um formato de SAÍDA que você esqueceu de mencionar.</p>
+
+  <h2>6.3 Seja afirmativo sempre que possível</h2>
+
+  <p>Em geral, é mais eficaz dizer o que você <strong>quer</strong> do que apenas o que você <strong>não quer</strong>. "Escreva em frases simples e diretas" funciona melhor do que "não use linguagem complicada". Reserve as RESTRIÇÕES para coisas genuinamente difíceis de expressar de forma positiva.</p>
+
+  <h2>6.4 Uma tarefa por prompt</h2>
+
+  <p>Se precisar de cinco coisas, escreva cinco prompts — ou liste as cinco explicitamente dentro de uma única TAREFA e as numere. Empilhar solicitações não relacionadas em um único prompt é a forma mais rápida de obter uma resposta que aborda tudo parcialmente e nada completamente.</p>
+
+  <h2>6.5 Ajuste o nível de detalhe à complexidade</h2>
+
+  <p>Um brainstorming criativo precisa de menos especificação do que um resumo jurídico. Um rascunho de e-mail casual precisa de menos estrutura do que um relatório técnico. Use seu julgamento, a quantidade certa de estrutura deve ser apenas a suficiente para remover ambiguidades.</p>
+
+  <!-- 7 -->
+  <h1>7. Erros Comuns e Como Corrigi-los</h1>
+
+  <p><strong>Erro: A tarefa está <em>misturada</em> dentro do contexto.</strong></p>
+
+  <p>Solução: Mova a tarefa para sua própria seção. O modelo nunca deve precisar adivinhar o que você realmente quer que ele faça.</p>
+
+  <p><strong>Erro: Requisitos e restrições contraditórios.</strong></p>
+
+  <p>Solução: Releia seu prompt em voz alta antes de enviá-lo. "Seja abrangente" e "limite a 200 palavras" não podem ser verdadeiros ao mesmo tempo.</p>
+
+  <p><strong>Erro: Pressupor que o modelo sabe o que você sabe.</strong></p>
+
+  <p>Solução: Use a seção CONTEXTO. Se um detalhe mudaria a resposta, inclua-o. O modelo não sabe nada sobre sua situação específica, a menos que você o informe.</p>
+
+  <p><strong>Erro: Especificar o formato como parte da tarefa.</strong></p>
+
+  <p>Solução: Mova as instruções de formato para a seção SAÍDA. "Escreva uma lista com marcadores das dez considerações mais importantes" mistura tarefa e formato. Escreva separadamente:</p>
+
+  <p>"#TAREFA: Liste as dez considerações mais importantes" e</p>
+
+  <p>"#SAIDA: Formato: lista com marcadores"</p>
+
+  <!-- 8 -->
+  <h1>8. Conclusão</h1>
+
+  <p>Escrever um prompt bem estruturado não é uma habilidade técnica. É uma habilidade de comunicação. Os mesmos princípios que produzem um bom e-mail, uma pauta de reunião clara ou um briefing de trabalho eficaz também produzem um bom prompt. Descreva a situação, defina o objetivo, especifique as restrições e diga o que você espera receber.</p>
+
+  <p>O formato de sete etiquetas proposto aqui, que inclui CONTEXTO, PERSONA, TAREFA, REQUISITOS, RESTRIÇÕES, SAÍDA, AÇÃO, é uma implementação prática desses princípios. Exige alguma prática para ser usado com fluência, mas o retorno é imediato: respostas mais relevantes, mais precisas e consideravelmente mais úteis.</p>
+
+  <p>A janela de contexto é sua tela. O que você coloca nela, e como a organiza, está inteiramente em suas mãos. Use-a bem.</p>
+
 </div>
-
-<!-- INTRODUÇÃO -->
-<h1>Introdução</h1>
-
-<p>Você provavelmente já usou uma IA como ChatGPT, Gemini ou Claude e ficou frustrado com uma resposta vaga, incompleta ou totalmente fora do que você queria. Na maioria das vezes o problema não está na IA, mas sim em como a pergunta foi formulada.</p>
-
-<p>Modelos Grandes de Linguagem, ou LLMs (<em>Large Language Models</em>, da sigla em Inglês) são ferramentas extraordinariamente poderosas, mas funcionam como um espelho refinado, refletindo com precisão o que você projeta neles. Uma entrada vaga produz uma saída vaga, uma entrada bem estruturada produz uma resposta focada, útil e de alta qualidade.</p>
-
-<p>Este texto vai lhe ajudar com o seguinte:</p>
-
-<p class="intro-bullet">- <em><strong>Como</strong> organizar as coisas ao formular um pedido para uma IA, e</em></p>
-<p class="intro-bullet">- <em><strong>Como</strong> usar a linguagem Markdown para estruturar o pedido de forma clara e eficaz</em>.</p>
-
-<p>Nenhuma das duas exige conhecimento técnico, só atenção e prática.</p>
-
-<!-- CAPÍTULO 1 -->
-<h1>1. LLMs e a janela de contexto</h1>
-
-<p>Para se comunicar bem com qualquer interlocutor, é útil entender como ele funciona. Com IAs, não é diferente.</p>
-
-<p><strong>O que é um LLM?</strong> Um modelo de linguagem é um programa treinado em enormes quantidades de texto, incluindo livros, artigos, conversas, códigos, etc., para aprender padrões de linguagem. Com base nesses padrões, ele é capaz de gerar textos que fazem sentido, responder perguntas e executar tarefas.</p>
-
-<p><strong>O que é a janela de contexto?</strong> Toda vez que você abre uma conversa com uma IA, ela começa "do zero". Ela não tem memória de conversas anteriores, a menos que você as forneça. O único material que ela tem para trabalhar é o que está na conversa atual. Isso se chama <span class="term-emphasis">janela de contexto</span>.</p>
-
-<p>Pense na janela de contexto como a mesa de trabalho da IA. Tudo que você coloca nessa mesa é considerado. Quanto mais claro, organizado e relevante for o material que você dispõe sobre essa mesa, melhor será o trabalho entregue.</p>
-
-<p>A implicação prática é a seguinte: o que você coloca nessa janela, e como o organiza, determina tudo que o modelo pode fazer por você. Um prompt bem estruturado usa a janela de contexto com eficiência. Ele fornece ao modelo as informações certas na ordem certa e deixa de fora o que é irrelevante. Um prompt mal estruturado desperdiça espaço e introduz ruído.</p>
-
-<!-- CAPÍTULO 2 -->
-<h1>2. Por que precisão importa?</h1>
-
-<p>Durante o treinamento, LLMs aprendem padrões estatísticos: quais palavras (tokens) tendem a seguir outras palavras, quais ideias se agrupam, quais estruturas sinalizam quais intenções. Ele não memorizou fatos como um banco de dados. Ele internalizou relações.</p>
-
-<p>Quando você o envia uma mensagem, o modelo não <strong>pensa</strong> como uma pessoa. Ele gera uma resposta prevendo, token por token, qual seria a continuação mais plausível para sua entrada. A qualidade dessa previsão depende quase inteiramente da qualidade do que você forneceu. "Entra lixo, sai lixo" não é um clichê nesse contexto, é uma descrição técnica do que acontece.</p>
-
-<p>A IA não advinha intenções. Ela processa o que está escrito. Se você escreve "me ajuda com um texto sobre liderança", a IA não sabe se você quer um artigo acadêmico, um post para LinkedIn, um roteiro de palestra ou uma lista de dicas. Ela vai escolher uma interpretação, e pode não ser a sua.</p>
-
-<p>É por isso que precisão importa. O modelo não consegue ler sua mente. Ele não pode fazer perguntas de esclarecimento, a menos que você o convide a isso. Ele fará suposições para preencher as lacunas, e essas suposições podem não corresponder às suas expectativas. Cada ambiguidade no seu prompt é um convite para o modelo adivinhar.</p>
-
-<!-- CAPÍTULO 3 -->
-<h1>3. Por que a estrutura importa e o que é Markdown</h1>
-
-<p>Antes de apresentar o modelo recomendado de prompt, precisamos falar brevemente sobre uma ferramenta que tornará suas consultas muito mais claras: o Markdown.</p>
-
-<p>Markdown é uma forma leve de adicionar estrutura a texto simples. Você não precisa de nenhum programa especial. Não precisa saber programar. Basta digitar alguns caracteres simples. Um <code>#</code> no início de uma linha para criar um título, dois asteriscos <code>**</code> ao redor de uma palavra para deixá-la em <strong>negrito</strong>, um <code>&gt;</code> para criar uma citação em bloco, e o texto imediatamente se torna mais organizado.</p>
-
-<p>Por que isso importa para os LLMs? Porque os modelos de linguagem foram treinados (também) com quantidades enormes de texto formatado em Markdown. Quando você usa títulos, rótulos e hierarquia visual, está falando uma língua que o modelo já conhece profundamente. Você está sinalizando estrutura, não apenas conteúdo. O modelo consegue identificar o que é contexto, o que é tarefa, o que é restrição — porque cada um desses elementos está visual e semanticamente delimitado.</p>
-
-<p>Compare estas duas formas de pedir a mesma coisa:</p>
-
-<p><strong>Sem estrutura:</strong></p>
-
-<div class="prompt-box">Estou escrevendo um post de blog para minha empresa, sobre embalagens sustentáveis, é para consumidores e não para especialistas, quero que tenha cerca de 500 palavras, por favor escreva em tom amigável e sem jargões técnicos.</div>
-
-<p><strong>Com estrutura:</strong></p>
-
-<div class="prompt-box">#CONTEXTO
-- Estou escrevendo um post de blog para o site da minha empresa.
-- Tema: embalagens sustentáveis.
-
-#TAREFA
-Escreva o post de blog.
-
-#REQUISITOS
-- Público-alvo: consumidores em geral, não especialistas técnicos
-- Extensão: aproximadamente 500 palavras
-- Tom: amigável e acessível
-
-#RESTRIÇÕES
-- Evite jargões técnicos
-- Não inclua notas de rodapé nem citações</div>
-
-<p>Os dois prompts transmitem a mesma informação, mas a versão estruturada é inequívoca, inteligível e imediatamente interpretável, tanto pelo modelo quanto por você. Se precisar revisá-la mais tarde, saberá exatamente onde mudar.</p>
-
-<!-- CAPÍTULO 4 -->
-<h1>4. Um Formato Canônico de Prompt</h1>
-
-<p>O formato proposto em seguida utiliza sete seções rotuladas, cada uma introduzida por um título em Markdown. Nem todas as seções são necessárias em todas as consultas: uma pergunta factual simples não precisa de mais do que uma TAREFA. Mas, para qualquer solicitação complexa, o uso das sete seções consistentemente produzirá resultados melhores.</p>
-
-<p>Visão geral das sete etiquetas:</p>
-
-<div class="prompt-box">#CONTEXTO     — informações prévias que o LLM necessita para melhor lhe entender
-
-#PERSONA      — o papel ou especialidade que você quer que o modelo adote
-
-#TAREFA       — a coisa especifica que você quer que ele faça
-
-#REQUISITOS   — o que a resposta tem que incluir
-
-#RESTRIÇÕES   — o que a resposta deve evitar
-
-#SAÍDA        — formato, extensão, tom, idioma, ...
-
-#AÇÃO         — o comando explícito de execução (o gatilho)</div>
-
-<p>Vejamos cada uma em detalhe.</p>
-
-<!-- 4.1 -->
-<h2>4.1 #CONTEXTO — Preparando o Cenário</h2>
-
-<p class="section-label"><span class="label-tag">#CONTEXTO</span><span class="label-desc"> - O pano de fundo de que o modelo precisa</span></p>
-
-<p>Esta seção responde à pergunta: o que o modelo precisa saber sobre a situação, antes de poder ajudá-lo? Não é a tarefa em si, são as informações prévias, circundantes, que tornam a tarefa significativa.</p>
-
-<p>Um bom contexto responde a perguntas como: Quem é você? Em que está trabalhando? Qual é o objetivo do projeto? Quem é o público-alvo? O que já foi feito?</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#CONTEXTO
-- Sou professor do ensino médio preparando uma aula sobre mudanças climáticas.
-- Meus alunos têm 16 anos e não têm conhecimento prévio em ciências ambientais.
-- A aula durará 45 minutos.</div>
-
-<!-- 4.2 -->
-<h2>4.2 #PERSONA — Atribuindo um Papel ao Modelo</h2>
-
-<p class="section-label"><span class="label-tag">#PERSONA</span><span class="label-desc"> - A especialidade ou perspectiva a adotar</span></p>
-
-<p>Os modelos de linguagem podem adotar diferentes vozes, estilos e áreas de especialização dependendo de como você enquadra a solicitação. A etiqueta PERSONA permite especificar qual chapéu o modelo deve usar.</p>
-
-<p>Isso não é apenas um recurso estilístico. Quando você pede ao modelo que se comporte como especialista em determinada área, ele recorre mais intensamente ao conhecimento especializado associado a esse campo. A qualidade e a relevância da resposta tipicamente melhoram.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#PERSONA
-Aja como um comunicador científico experiente, especializado em explicar
-temas complexos para adolescentes, sem simplificar demais.</div>
-
-<!-- 4.3 -->
-<h2>4.3 #TAREFA — A Solicitação Central</h2>
-
-<p class="section-label"><span class="label-tag">#TAREFA</span><span class="label-desc"> - Exatamente o quê você precisa que o modelo faça</span></p>
-
-<p>Este é o coração do prompt. A TAREFA deve ser uma <strong>instrução única, clara e acionável</strong>. Evite combinar várias tarefas em uma única etiqueta. Se precisar de várias coisas, liste-as explicitamente ou considere prompts separados.</p>
-
-<p>A falha mais comum aqui é a vagueza. "Me ajude com meu relatório" não é uma tarefa. "Escreva a seção de introdução do meu relatório", é.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#TAREFA
-Elabore um plano de aula sobre as causas e efeitos das mudanças climáticas.</div>
-
-<!-- 4.4 -->
-<h2>4.4 #REQUISITOS — O que a Resposta Deve Incluir</h2>
-
-<p class="section-label"><span class="label-tag">#REQUISITOS</span><span class="label-desc"> - Restrições positivas sobre a resposta</span></p>
-
-<p>Os requisitos são as coisas que a resposta deve fazer, incluir ou satisfazer. Pense neles como uma lista de verificação que o modelo deve conferir antes de entregar sua resposta.</p>
-
-<p>Use marcadores aqui. Cada requisito deve ser concreto e verificável, algo que você poderia literalmente marcar como cumprido ao ler a resposta.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#REQUISITOS
-- A aula terá duração de 45 minutos
-- Incluir pelo menos uma atividade prática em grupo
-- Referenciar um exemplo real de impacto climático dos últimos 10 anos
-- Garantir que todo o vocabulário seja acessível ao nível do ensino médio
-- Fornecer o tempo estimado para cada segmento da aula
-– Incluir uma pergunta de discussão para encerramento</div>
-
-<!-- 4.5 -->
-<h2>4.5 #RESTRIÇÕES — O que a Resposta Deve Evitar</h2>
-
-<p class="section-label"><span class="label-tag">#RESTRIÇÕES</span><span class="label-desc"> - Restrições negativas sobre a resposta</span></p>
-
-<p>Enquanto os REQUISITOS dizem ao modelo o que incluir, as RESTRIÇÕES dizem o que deixar de fora. Esta seção é especialmente útil para prevenir falhas comuns: extensão excessiva, tom inadequado, conteúdo indesejado ou terminologia técnica que seu público não entenderá.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#RESTRIÇÕES
-- Não sugerir atividades que requeiram equipamentos especiais
-- Evitar tom pessimista ou alarmista</div>
-
-<!-- 4.6 -->
-<h2>4.6 #SAÍDA — Como a Resposta Deve Parecer</h2>
-
-<p class="section-label"><span class="label-tag">#SAÍDA</span><span class="label-desc"> - Formato, extensão, tom, idioma, ...</span></p>
-
-<p>A seção SAÍDA é onde você especifica a forma da resposta, independentemente do seu conteúdo. É aqui que você diz: me dê uma lista itemizada, escreva em prosa formal, limite a 300 palavras, ou responda em Português.</p>
-
-<p>Separar o formato de saída do conteúdo da tarefa é uma das técnicas essenciais na redação de prompts. Isso evita que você enterre instruções de formatação dentro da descrição da tarefa, onde podem ser facilmente ignoradas.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#SAÍDA
-- Formato: documento estruturado com seções nomeadas
-- Extensão: aproximadamente 1000 palavras
-- Tom: profissional, porém acolhedor
-- Idioma: Português brasileiro</div>
-
-<!-- 4.7 -->
-<h2>4.7 #AÇÃO — O Gatilho</h2>
-
-<p class="section-label"><span class="label-tag">#AÇÃO</span><span class="label-desc"> - A instrução explícita para começar</span></p>
-
-<p>A etiqueta AÇÃO é curta e direta. É a instrução final que diz ao modelo para executar tudo o que veio antes. Na maioria dos casos, é uma única frase.</p>
-
-<p>Você pode se perguntar por que isso é necessário se já escreveu uma TAREFA. O motivo é tanto psicológico quanto técnico: separa claramente a especificação da execução e sinaliza ao modelo que todo o enquadramento está completo e que ele deve agora produzir o resultado final.</p>
-
-<p><strong>Exemplo:</strong></p>
-
-<div class="prompt-box">#AÇÃO
-Escreva o plano de aula</div>
-
-<!-- CAPÍTULO 5 -->
-<h1>5. O Exemplo Completo</h1>
-
-<p>Aqui está tudo reunido em um prompt coerente, usando a aula sobre mudanças climáticas como exemplo:</p>
-
-<p>Perceba como é fácil ler este prompt. Não apenas para o modelo, mas para você mesmo. Se um colega lhe perguntasse o que você estava tentando realizar, você poderia entregar-lhe este documento e ele entenderia imediatamente. Essa clareza não é acidental. É o resultado da estrutura.</p>
-
-<div class="prompt-box">#TAREFA
-Elabore um plano de aula sobre as causas e efeitos das mudanças climáticas.
-
-#PERSONA
-Aja como um comunicador científico experiente, especializado em explicar
-temas complexos para adolescentes, sem simplificar demais.
-
-#REQUISITOS
-- A aula terá duração de 45 minutos
-- Incluir pelo menos uma atividade prática em grupo
-- Referenciar um exemplo real de impacto climático dos últimos 10 anos
-- Garantir que todo o vocabulário seja acessível ao nível do ensino médio
-- Fornecer o tempo estimado para cada segmento da aula
-– Incluir uma pergunta de discussão para encerramento
-
-#RESTRIÇÕES
-- Não sugerir atividades que requeiram equipamentos especiais
-- Evitar tom pessimista ou alarmista
-
-#SAÍDA
-- Formato: documento estruturado com seções nomeadas
-- Extensão: aproximadamente 1000 palavras
-- Tom: profissional, porém acolhedor
-- Idioma: Português brasileiro
-
-#AÇÃO
-Escreva o plano de aula</div>
-
-<!-- CAPÍTULO 6 -->
-<h1>6. Dicas Práticas para Prompts Melhores</h1>
-
-<h2>6.1 Você não precisa das sete etiquetas sempre</h2>
-
-<p>Uma pergunta factual simples, "Qual é a capital da Austrália?" precisa apenas de uma TAREFA. O formato canônico é uma estrutura proposta para facilitar, não para restringir. Use as seções que adicionam clareza e pule as desnecessárias.</p>
-
-<h2>6.2 Itere e Refine</h2>
-
-<p>Pense no seu primeiro prompt como um rascunho. Se a resposta do modelo não estiver correta, examine seu prompt antes de culpar o modelo. Normalmente, o problema é uma TAREFA mal especificada, uma RESTRIÇÃO faltando ou um formato de SAÍDA que você esqueceu de mencionar.</p>
-
-<h2>6.3 Seja afirmativo sempre que possível</h2>
-
-<p>Em geral, é mais eficaz dizer o que você <strong>quer</strong> do que apenas o que você <strong>não quer</strong>. "Escreva em frases simples e diretas" funciona melhor do que "não use linguagem complicada". Reserve as RESTRIÇÕES para coisas genuinamente difíceis de expressar de forma positiva.</p>
-
-<h2>6.4 Uma tarefa por prompt</h2>
-
-<p>Se precisar de cinco coisas, escreva cinco prompts — ou liste as cinco explicitamente dentro de uma única TAREFA e as numere. Empilhar solicitações não relacionadas em um único prompt é a forma mais rápida de obter uma resposta que aborda tudo parcialmente e nada completamente.</p>
-
-<h2>6.5 Ajuste o nível de detalhe à complexidade</h2>
-
-<p>Um brainstorming criativo precisa de menos especificação do que um resumo jurídico. Um rascunho de e-mail casual precisa de menos estrutura do que um relatório técnico. Use seu julgamento, a quantidade certa de estrutura deve ser apenas a suficiente para remover ambiguidades.</p>
-
-<!-- CAPÍTULO 7 -->
-<h1>7. Erros Comuns e Como Corrigi-los</h1>
-
-<p><span class="error-label">Erro: A tarefa está <em>misturada</em> dentro do contexto.</span></p>
-<p>Solução: Mova a tarefa para sua própria seção. O modelo nunca deve precisar adivinhar o que você realmente quer que ele faça.</p>
-
-<p><span class="error-label">Erro: Requisitos e restrições contraditórios.</span></p>
-<p>Solução: Releia seu prompt em voz alta antes de enviá-lo. "Seja abrangente" e "limite a 200 palavras" não podem ser verdadeiros ao mesmo tempo.</p>
-
-<p><span class="error-label">Erro: Pressupor que o modelo sabe o que você sabe.</span></p>
-<p>Solução: Use a seção CONTEXTO. Se um detalhe mudaria a resposta, inclua-o. O modelo não sabe nada sobre sua situação específica, a menos que você o informe.</p>
-
-<p><span class="error-label">Erro: Especificar o formato como parte da tarefa.</span></p>
-<p>Solução: Mova as instruções de formato para a seção SAÍDA. "Escreva uma lista com marcadores das dez considerações mais importantes" mistura tarefa e formato. Escreva separadamente:</p>
-
-<p>"#TAREFA: Liste as dez considerações mais importantes" e</p>
-<p>"#SAIDA: Formato: lista com marcadores"</p>
-
-<!-- CAPÍTULO 8 -->
-<h1>8. Conclusão</h1>
-
-<p>Escrever um prompt bem estruturado não é uma habilidade técnica. É uma habilidade de comunicação. Os mesmos princípios que produzem um bom e-mail, uma pauta de reunião clara ou um briefing de trabalho eficaz também produzem um bom prompt. Descreva a situação, defina o objetivo, especifique as restrições e diga o que você espera receber.</p>
-
-<p>O formato de sete etiquetas proposto aqui, que inclui CONTEXTO, PERSONA, TAREFA, REQUISITOS, RESTRIÇÕES, SAÍDA, AÇÃO, é uma implementação prática desses princípios. Exige alguma prática para ser usado com fluência, mas o retorno é imediato: respostas mais relevantes, mais precisas e consideravelmente mais úteis.</p>
-
-<p>A janela de contexto é sua tela. O que você coloca nela, e como a organiza, está inteiramente em suas mãos. Use-a bem.</p>
-
 </body>
 </html>
