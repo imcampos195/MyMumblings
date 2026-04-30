@@ -1,2 +1,2 @@
 # MyMumblings
-Reflections on Computing 
+Reflections on nerdy stuff
