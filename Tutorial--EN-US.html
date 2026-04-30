@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Write Well-Structured Prompts for LLMs</title>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #404040;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #ffffff;
+  }
+
+  /* Cover / Title block */
+  .cover {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .cover-title-1 {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .cover-title-2 {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #2E75B6;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .cover-title-3 {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 24px 0;
+    line-height: 1.2;
+  }
+  .cover-author {
+    font-style: italic;
+    color: #404040;
+    font-size: 18px;
+    margin: 0;
+  }
+  .cover-subtitle {
+    font-style: italic;
+    color: #6B7280;
+    font-size: 16px;
+    margin: 4px 0 0 0;
+  }
+  .cover-date {
+    font-style: italic;
+    color: #6B7280;
+    font-size: 16px;
+    margin: 4px 0 0 0;
+  }
+
+  /* Headings */
+  h1 {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #2F5496;
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2F5496;
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+
+  /* Paragraphs */
+  p {
+    margin: 0 0 14px 0;
+  }
+
+  /* Section label lines (e.g. "#CONTEXT - The backdrop...") */
+  .section-label {
+    margin: 0 0 12px 0;
+  }
+  .section-label .label-tag {
+    font-weight: 700;
+    color: #000000;
+  }
+  .section-label .label-desc {
+    font-style: italic;
+    color: #404040;
+  }
+
+  /* Prompt boxes (tables from docx) */
+  .prompt-box {
+    background-color: #EBF3FB;
+    border: 1px solid #B8D4EC;
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 16px 0 20px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #1F3864;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* Bold / italic inline */
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  /* Italic intro bullets (Intro section) */
+  .intro-bullet {
+    font-style: italic;
+    margin: 0 0 6px 0;
+    padding-left: 16px;
+  }
+
+  /* "context window" emphasis */
+  .term-emphasis {
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  /* Error/solution pattern in ch. 7 */
+  .error-label { font-weight: 700; color: #404040; }
+
+  /* inline code */
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f0f4fa;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 15px;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <p class="cover-title-1">How to Write</p>
+  <p class="cover-title-2">Well-Structured Prompts</p>
+  <p class="cover-title-3">for LLMs</p>
+  <p class="cover-author">Ivan Moura Campos</p>
+  <p class="cover-subtitle">Professor Emeritus – Department of Computer Science, UFMG, Brazil</p>
+  <p class="cover-date">April 2026</p>
+</div>
+
+<!-- INTRODUCTION -->
+<h1>Introduction</h1>
+
+<p>You have probably used an AI such as ChatGPT, Gemini, or Claude and felt frustrated with a vague, incomplete, or entirely off-target response. In most cases the problem is not with the AI, but with how the question was worded.</p>
+
+<p>Large Language Models, or LLMs, are extraordinarily powerful tools, but they work like a refined mirror, reflecting with precision what you project onto them. A vague input produces a vague output, a well-structured input produces a focused, useful, high-quality response.</p>
+
+<p>This text will help you with the following:</p>
+
+<p class="intro-bullet">- <em><strong>How</strong> to organize things when formulating a request to an AI, and</em></p>
+<p class="intro-bullet">- <em><strong>How</strong> to use the Markdown language to structure the request in a clear and effective way</em>.</p>
+
+<p>Neither one requires technical knowledge, only attention and practice.</p>
+
+<!-- CHAPTER 1 -->
+<h1>1. LLMs and the context window</h1>
+
+<p>To communicate well with any interlocutor, it is useful to understand how they work. With AIs, it is no different.</p>
+
+<p><strong>What is an LLM?</strong> A language model is a program trained on enormous amounts of text, including books, articles, conversations, code, etc., to learn language patterns. Based on those patterns, it is able to generate text that makes sense, answer questions, and perform tasks.</p>
+
+<p><strong>What is the context window?</strong> Every time you open a conversation with an AI, it starts "from scratch." It has no memory of previous conversations, unless you provide them. The only material it has to work with is what is in the current conversation. This is called the <span class="term-emphasis">context window</span>.</p>
+
+<p>Think of the context window as the AI's workbench. Everything you place on that bench is taken into account. The clearer, more organized, and more relevant the material you lay out on that bench, the better the work delivered.</p>
+
+<p>The practical implication is this: what you place in that window, and how you organize it, determines everything the model can do for you. A well-structured prompt uses the context window efficiently. It provides the model with the right information in the right order and leaves out what is irrelevant. A poorly structured prompt wastes space and introduces noise.</p>
+
+<!-- CHAPTER 2 -->
+<h1>2. Why precision matters</h1>
+
+<p>During training, LLMs learn statistical patterns: which words (tokens) tend to follow other words, which ideas cluster together, which structures signal which intentions. It did not memorize facts like a database. It internalized relationships.</p>
+
+<p>When you send it a message, the model does not <strong>think</strong> like a person. It generates a response by predicting, token by token, what the most plausible continuation of your input would be. The quality of that prediction depends almost entirely on the quality of what you provided. "Garbage in, garbage out" is not a cliché in this context, it is a technical description of what happens.</p>
+
+<p>The AI does not guess intentions. It processes what is written. If you write "help me with a text on leadership," the AI does not know whether you want an academic article, a LinkedIn post, a lecture script, or a list of tips. It will choose an interpretation, and it may not be yours.</p>
+
+<p>That is why precision matters. The model cannot read your mind. It cannot ask clarifying questions, unless you invite it to do so. It will make assumptions to fill in the gaps, and those assumptions may not match your expectations. Every ambiguity in your prompt is an invitation for the model to guess.</p>
+
+<!-- CHAPTER 3 -->
+<h1>3. Why structure matters and what Markdown is</h1>
+
+<p>Before presenting the recommended prompt model, we need to briefly talk about a tool that will make your queries much clearer: Markdown.</p>
+
+<p>Markdown is a lightweight way of adding structure to plain text. You do not need any special software. You do not need to know how to program. You simply type a few plain characters. A <code>#</code> at the beginning of a line to create a heading, two asterisks <code>**</code> around a word to make it <strong>bold</strong>, a <code>&gt;</code> to create a block quote, and the text immediately becomes more organized.</p>
+
+<p>Why does this matter for LLMs? Because language models were trained (also) on enormous amounts of Markdown-formatted text. When you use headings, labels, and visual hierarchy, you are speaking a language the model already knows deeply. You are signaling structure, not just content. The model is able to identify what is context, what is task, what is constraint — because each of those elements is visually and semantically delimited.</p>
+
+<p>Compare these two ways of asking for the same thing:</p>
+
+<p><strong>Without structure:</strong></p>
+
+<div class="prompt-box">I am writing a blog post for my company about sustainable packaging, it is for consumers and not for specialists, I want it to be about 500 words, please write in a friendly tone and without technical jargon.</div>
+
+<p><strong>With structure:</strong></p>
+
+<div class="prompt-box">#CONTEXT
+- I am writing a blog post for my company's website.
+- Topic: sustainable packaging.
+
+#TASK
+Write the blog post.
+
+#REQUIREMENTS
+- Target audience: general consumers, not technical specialists
+- Length: approximately 500 words
+- Tone: friendly and accessible
+
+#RESTRICTIONS
+- Avoid technical jargon
+- Do not include footnotes or citations</div>
+
+<p>Both prompts convey the same information, but the structured version is unambiguous, intelligible, and immediately interpretable, both by the model and by you. If you need to revise it later, you will know exactly where to make changes.</p>
+
+<!-- CHAPTER 4 -->
+<h1>4. A Canonical Prompt Format</h1>
+
+<p>The format proposed below uses seven labeled sections, each introduced by a Markdown heading. Not all sections are necessary in every query: a simple factual question needs no more than a TASK. But for any complex request, consistently using the seven sections will produce better results.</p>
+
+<p>Overview of the seven labels:</p>
+
+<div class="prompt-box">#CONTEXT      — background information the LLM needs to better understand you
+
+#PERSONA      — the role or expertise you want the model to adopt
+
+#TASK         — the specific thing you want it to do
+
+#REQUIREMENTS — what the response must include
+
+#RESTRICTIONS — what the response should avoid
+
+#OUTPUT       — format, length, tone, language, ...
+
+#ACTION       — the explicit execution command (the trigger)</div>
+
+<p>Let us look at each one in detail.</p>
+
+<!-- 4.1 -->
+<h2>4.1 #CONTEXT — Setting the Scene</h2>
+
+<p class="section-label"><span class="label-tag">#CONTEXT</span><span class="label-desc"> - The backdrop the model needs</span></p>
+
+<p>This section answers the question: what does the model need to know about the situation before it can help you? It is not the task itself, it is the prior, surrounding information that makes the task meaningful.</p>
+
+<p>Good context answers questions such as: Who are you? What are you working on? What is the project's goal? Who is the target audience? What has already been done?</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#CONTEXT
+- I am a high school teacher preparing a lesson on climate change.
+- My students are 16 years old and have no prior knowledge of environmental science.
+- The lesson will last 45 minutes.</div>
+
+<!-- 4.2 -->
+<h2>4.2 #PERSONA — Assigning a Role to the Model</h2>
+
+<p class="section-label"><span class="label-tag">#PERSONA</span><span class="label-desc"> - The expertise or perspective to adopt</span></p>
+
+<p>Language models can adopt different voices, styles, and areas of expertise depending on how you frame the request. The PERSONA label lets you specify which hat the model should wear.</p>
+
+<p>This is not merely a stylistic feature. When you ask the model to behave as a specialist in a given area, it draws more intensely on the specialized knowledge associated with that field. The quality and relevance of the response typically improve.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#PERSONA
+Act as an experienced science communicator, specialized in explaining
+complex topics to teenagers, without oversimplifying.</div>
+
+<!-- 4.3 -->
+<h2>4.3 #TASK — The Central Request</h2>
+
+<p class="section-label"><span class="label-tag">#TASK</span><span class="label-desc"> - Exactly what you need the model to do</span></p>
+
+<p>This is the heart of the prompt. The TASK should be a <strong>single, clear, actionable instruction</strong>. Avoid combining multiple tasks under a single label. If you need several things, list them explicitly or consider separate prompts.</p>
+
+<p>The most common failure here is vagueness. "Help me with my report" is not a task. "Write the introduction section of my report" is.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#TASK
+Develop a lesson plan on the causes and effects of climate change.</div>
+
+<!-- 4.4 -->
+<h2>4.4 #REQUIREMENTS — What the Response Must Include</h2>
+
+<p class="section-label"><span class="label-tag">#REQUIREMENTS</span><span class="label-desc"> - Positive constraints on the response</span></p>
+
+<p>Requirements are the things the response must do, include, or satisfy. Think of them as a checklist the model should verify before delivering its response.</p>
+
+<p>Use bullet points here. Each requirement should be concrete and verifiable, something you could literally check off as fulfilled when reading the response.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#REQUIREMENTS
+- The lesson will be 45 minutes long
+- Include at least one hands-on group activity
+- Reference a real example of climate impact from the last 10 years
+- Ensure all vocabulary is accessible to high school level
+- Provide the estimated time for each segment of the lesson
+– Include a discussion question for closing</div>
+
+<!-- 4.5 -->
+<h2>4.5 #RESTRICTIONS — What the Response Should Avoid</h2>
+
+<p class="section-label"><span class="label-tag">#RESTRICTIONS</span><span class="label-desc"> - Negative constraints on the response</span></p>
+
+<p>While REQUIREMENTS tell the model what to include, RESTRICTIONS tell it what to leave out. This section is especially useful for preventing common failures: excessive length, inappropriate tone, unwanted content, or technical terminology your audience will not understand.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#RESTRICTIONS
+- Do not suggest activities that require special equipment
+- Avoid a pessimistic or alarmist tone</div>
+
+<!-- 4.6 -->
+<h2>4.6 #OUTPUT — What the Response Should Look Like</h2>
+
+<p class="section-label"><span class="label-tag">#OUTPUT</span><span class="label-desc"> - Format, length, tone, language, ...</span></p>
+
+<p>The OUTPUT section is where you specify the form of the response, independent of its content. This is where you say: give me a bulleted list, write in formal prose, limit to 300 words, or respond in English.</p>
+
+<p>Separating output format from task content is one of the essential techniques in prompt writing. It prevents you from burying formatting instructions inside the task description, where they can easily be overlooked.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#OUTPUT
+- Format: structured document with named sections
+- Length: approximately 1000 words
+- Tone: professional yet welcoming
+- Language: American English</div>
+
+<!-- 4.7 -->
+<h2>4.7 #ACTION — The Trigger</h2>
+
+<p class="section-label"><span class="label-tag">#ACTION</span><span class="label-desc"> - The explicit instruction to begin</span></p>
+
+<p>The ACTION label is short and direct. It is the final instruction that tells the model to execute everything that came before. In most cases, it is a single sentence.</p>
+
+<p>You may wonder why this is necessary if you already wrote a TASK. The reason is both psychological and technical: it clearly separates specification from execution and signals to the model that all the framing is complete and that it should now produce the final output.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="prompt-box">#ACTION
+Write the lesson plan</div>
+
+<!-- CHAPTER 5 -->
+<h1>5. The Complete Example</h1>
+
+<p>Here is everything brought together in a coherent prompt, using the climate change lesson as an example:</p>
+
+<p>Notice how easy it is to read this prompt. Not just for the model, but for yourself. If a colleague asked you what you were trying to accomplish, you could hand them this document and they would understand immediately. That clarity is not accidental. It is the result of structure.</p>
+
+<div class="prompt-box">#TASK
+Develop a lesson plan on the causes and effects of climate change.
+
+#PERSONA
+Act as an experienced science communicator, specialized in explaining
+complex topics to teenagers, without oversimplifying.
+
+#REQUIREMENTS
+- The lesson will be 45 minutes long
+- Include at least one hands-on group activity
+- Reference a real example of climate impact from the last 10 years
+- Ensure all vocabulary is accessible to high school level
+- Provide the estimated time for each segment of the lesson
+– Include a discussion question for closing
+
+#RESTRICTIONS
+- Do not suggest activities that require special equipment
+- Avoid a pessimistic or alarmist tone
+
+#OUTPUT
+- Format: structured document with named sections
+- Length: approximately 1000 words
+- Tone: professional yet welcoming
+- Language: American English
+
+#ACTION
+Write the lesson plan</div>
+
+<!-- CHAPTER 6 -->
+<h1>6. Practical Tips for Better Prompts</h1>
+
+<h2>6.1 You do not always need all seven labels</h2>
+
+<p>A simple factual question, "What is the capital of Australia?" needs only a TASK. The canonical format is a proposed structure to help, not to constrain. Use the sections that add clarity and skip the unnecessary ones.</p>
+
+<h2>6.2 Iterate and Refine</h2>
+
+<p>Think of your first prompt as a draft. If the model's response is not right, examine your prompt before blaming the model. Usually the problem is a poorly specified TASK, a missing RESTRICTION, or an OUTPUT format you forgot to mention.</p>
+
+<h2>6.3 Be affirmative whenever possible</h2>
+
+<p>In general, it is more effective to say what you <strong>want</strong> than only what you <strong>do not want</strong>. "Write in simple, direct sentences" works better than "do not use complicated language." Reserve RESTRICTIONS for things that are genuinely hard to express in a positive way.</p>
+
+<h2>6.4 One task per prompt</h2>
+
+<p>If you need five things, write five prompts — or list the five explicitly within a single TASK and number them. Stacking unrelated requests into a single prompt is the fastest way to get a response that addresses everything partially and nothing completely.</p>
+
+<h2>6.5 Adjust the level of detail to the complexity</h2>
+
+<p>A creative brainstorm needs less specification than a legal summary. A casual email draft needs less structure than a technical report. Use your judgment, the right amount of structure should be just enough to remove ambiguity.</p>
+
+<!-- CHAPTER 7 -->
+<h1>7. Common Mistakes and How to Fix Them</h1>
+
+<p><span class="error-label">Mistake: The task is <em>mixed in</em> with the context.</span></p>
+<p>Solution: Move the task to its own section. The model should never have to guess what you actually want it to do.</p>
+
+<p><span class="error-label">Mistake: Contradictory requirements and restrictions.</span></p>
+<p>Solution: Read your prompt out loud before sending it. "Be comprehensive" and "limit to 200 words" cannot both be true at the same time.</p>
+
+<p><span class="error-label">Mistake: Assuming the model knows what you know.</span></p>
+<p>Solution: Use the CONTEXT section. If a detail would change the response, include it. The model knows nothing about your specific situation unless you tell it.</p>
+
+<p><span class="error-label">Mistake: Specifying format as part of the task.</span></p>
+<p>Solution: Move format instructions to the OUTPUT section. "Write a bulleted list of the ten most important considerations" mixes task and format. Write them separately:</p>
+
+<p>"#TASK: List the ten most important considerations" and</p>
+<p>"#OUTPUT: Format: bulleted list"</p>
+
+<!-- CHAPTER 8 -->
+<h1>8. Conclusion</h1>
+
+<p>Writing a well-structured prompt is not a technical skill. It is a communication skill. The same principles that produce a good email, a clear meeting agenda, or an effective work briefing also produce a good prompt. Describe the situation, define the goal, specify the constraints, and say what you expect to receive.</p>
+
+<p>The seven-label format proposed here, which includes CONTEXT, PERSONA, TASK, REQUIREMENTS, RESTRICTIONS, OUTPUT, ACTION, is a practical implementation of those principles. It takes some practice to use fluently, but the return is immediate: more relevant, more precise, and considerably more useful responses.</p>
+
+<p>The context window is your canvas. What you place in it, and how you organize it, is entirely in your hands. Use it well.</p>
+
+</body>
+</html>
